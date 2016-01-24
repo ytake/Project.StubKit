@@ -1,0 +1,13 @@
+sudo: false
+language: php
+php:
+    - 7.0
+    - hhvm
+before_script:
+    - composer self-update
+script:
+    - composer install --prefer-source
+    - chmod -R 777 tests/build
+    - ./vendor/bin/phpunit
+after_script:
+    - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]; then php vendor/bin/coveralls -v; fi
